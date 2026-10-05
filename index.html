@@ -38,7 +38,7 @@
             display: block;
         }
 
-        .welcome-screen {
+        .card {
             background: white;
             border-radius: 12px;
             padding: 40px 30px;
@@ -46,19 +46,19 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .welcome-screen h1 {
+        .card h1 {
             color: #667eea;
             font-size: 28px;
             margin-bottom: 10px;
         }
 
-        .welcome-screen .subtitle {
+        .card .subtitle {
             color: #666;
             font-size: 14px;
             margin-bottom: 30px;
         }
 
-        .welcome-screen .logo {
+        .card .logo {
             font-size: 60px;
             margin-bottom: 20px;
         }
@@ -83,12 +83,6 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         .btn-secondary {
             background: #f0f0f0;
             color: #333;
@@ -98,6 +92,89 @@
             background: #e0e0e0;
         }
 
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .error-message {
+            color: #d84315;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: #2e7d32;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+        }
+
+        /* Pantalla Principal */
         .main-screen {
             background: white;
             border-radius: 12px;
@@ -151,310 +228,6 @@
             color: #333;
             font-weight: 600;
             font-size: 14px;
-        }
-
-        .menu-item .lock-icon {
-            font-size: 12px;
-            color: #d84315;
-            margin-top: 5px;
-        }
-
-        .btn-back {
-            background: #f0f0f0;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-content h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .error-message {
-            color: #d84315;
-            font-size: 13px;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .success-message {
-            color: #2e7d32;
-            font-size: 13px;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal-buttons button {
-            flex: 1;
-        }
-
-        .colaboradores-screen {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .colaboradores-screen h1 {
-            color: #667eea;
-            font-size: 24px;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .collaborator-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .collaborator-item {
-            background: #f9f9f9;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .collaborator-item:hover {
-            border-color: #667eea;
-            background: #f5f5ff;
-        }
-
-        .collaborator-item .icon {
-            font-size: 24px;
-            margin-right: 15px;
-            display: inline-block;
-        }
-
-        .collaborator-item .label {
-            color: #333;
-            font-weight: 600;
-        }
-
-        .content-screen {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .content-screen h1 {
-            color: #667eea;
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .content-screen .subtitle {
-            color: #999;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .upload-area {
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .upload-area:hover {
-            background: #f5f5ff;
-            border-color: #5568d3;
-        }
-
-        .upload-area.dragover {
-            background: #f5f5ff;
-            border-color: #5568d3;
-        }
-
-        .upload-area .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .upload-area .text {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .upload-area .subtext {
-            color: #999;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .file-list {
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .file-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .file-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .file-item-icon {
-            font-size: 32px;
-            min-width: 40px;
-        }
-
-        .file-item-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .file-item .name {
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-            word-break: break-word;
-        }
-
-        .file-item .meta {
-            font-size: 12px;
-            color: #999;
-            margin-top: 4px;
-        }
-
-        .file-item-actions {
-            display: flex;
-            gap: 8px;
-            min-width: fit-content;
-        }
-
-        .file-item .download-btn, .file-item .delete-btn {
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .file-item .download-btn {
-            background: #e3f2fd;
-            color: #667eea;
-        }
-
-        .file-item .download-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .file-item .delete-btn {
-            background: #ffebee;
-            color: #d84315;
-        }
-
-        .file-item .delete-btn:hover {
-            background: #ef5350;
-            color: white;
-        }
-
-        .empty-message {
-            color: #999;
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: #667eea;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-            margin-right: 5px;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
         }
 
         /* PDF Viewer */
@@ -564,47 +337,114 @@
             font-weight: 500;
         }
 
-        .file-item.pdf-file {
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            border: 2px solid #667eea;
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .file-list {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .empty-message {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 5px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .admin-secret-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .admin-secret-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.4);
         }
 
         @media (max-width: 480px) {
             .menu-grid {
                 grid-template-columns: 1fr;
             }
-
-            .file-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .file-item-actions {
-                width: 100%;
-            }
-
-            .file-item-actions button {
-                flex: 1;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-
-
-        <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="screen welcome-screen">
-            <div class="logo">🏀</div>
-            <h1>XXI Encuentro Nacional</h1>
-            <p class="subtitle">de Mini Básquet</p>
-            <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Club Independiente de Tandil</p>
-            
-            <button class="btn" onclick="goToMain()">Entrar</button>
+        <!-- Admin Modal (Escondido) -->
+        <div id="adminModal" class="modal">
+            <div class="modal-content">
+                <h2>Administrador</h2>
+                <form onsubmit="verifyAdminPassword(event)">
+                    <div class="form-group">
+                        <label for="adminPass">Contraseña</label>
+                        <input type="password" id="adminPass" autofocus>
+                    </div>
+                    <div id="adminError" class="error-message"></div>
+                    <div class="modal-buttons">
+                        <button type="submit" class="btn">Entrar</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeAdminModal()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <!-- Main Screen -->
-        <div id="mainScreen" class="screen main-screen">
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="screen card">
+            <div class="logo">⚙️</div>
+            <h1>Panel de Administración</h1>
+            <p class="subtitle">Configuración de la App</p>
+            
+            <div class="form-group">
+                <label for="adminScriptUrl">URL del Google Apps Script</label>
+                <input type="text" id="adminScriptUrl" placeholder="https://script.google.com/macros/...">
+                <div style="font-size: 12px; color: #999; margin-top: 8px;">Pega la URL completa del Deploy</div>
+            </div>
+
+            <button class="btn" onclick="saveAdminConfig()">💾 Guardar Configuración</button>
+            <div id="adminSuccess" class="success-message">✅ Configuración guardada</div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                <button class="btn btn-secondary" onclick="goToPublicApp()">👥 Ver App Pública</button>
+                <button class="btn btn-secondary" onclick="logoutAdmin()" style="margin-top: 10px;">🚪 Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Public App - Main Menu -->
+        <div id="publicMainScreen" class="screen active main-screen">
             <h1>XXI Encuentro Nacional</h1>
             <p class="subtitle">Mini Básquet</p>
 
@@ -629,291 +469,143 @@
                     <div class="icon">🤝</div>
                     <div class="label">Sponsors</div>
                 </div>
-                <div class="menu-item" onclick="openColaboradoresLogin()">
-                    <div class="icon">🔐</div>
-                    <div class="label">Colaboradores (SC)</div>
-                    <div class="lock-icon">Requiere clave</div>
-                </div>
             </div>
         </div>
 
-        <!-- Colaboradores Screen -->
-        <div id="colaboradoresScreen" class="screen colaboradores-screen">
-            <h1>Colaboradores (SC)</h1>
-            <p class="subtitle" style="margin-bottom: 30px;">Acceso restringido</p>
-
-            <div class="collaborator-menu">
-                <div class="collaborator-item" onclick="openCajaLogin()">
-                    <span class="icon">💰</span>
-                    <span class="label">Caja de Encuentro</span>
-                </div>
-            </div>
-
-            <button class="btn btn-back" onclick="goToMain()">← Volver</button>
-        </div>
-
-        <!-- Content Screen -->
-        <div id="contentScreen" class="screen content-screen">
+        <!-- Public App - Content -->
+        <div id="publicContentScreen" class="screen main-screen">
             <h1 id="contentTitle">Contenido</h1>
             <p class="subtitle" id="contentSubtitle"></p>
 
-            <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                <div class="icon">📤</div>
-                <div class="text">Haz clic o arrastra archivos</div>
-                <div class="subtext">Imágenes, PDFs, videos, etc.</div>
-            </div>
-            <input type="file" id="fileInput" multiple onchange="handleFileSelect(event)">
-
             <div class="file-list" id="fileList"></div>
 
-            <button class="btn btn-back" onclick="goToMain()">← Volver</button>
+            <button class="btn btn-back" onclick="goBackToMenu()">← Volver</button>
         </div>
     </div>
 
-    <!-- Modals -->
-    <div id="colaboradoresLoginModal" class="modal">
-        <div class="modal-content">
-            <h2>Colaboradores (SC)</h2>
-            <form onsubmit="verifyColaboradoresPassword(event)">
-                <div class="form-group">
-                    <label for="colaboradoresPass">Contraseña</label>
-                    <input type="password" id="colaboradoresPass" autofocus required>
-                </div>
-                <div id="colaboradoresError" class="error-message"></div>
-                <div class="modal-buttons">
-                    <button type="submit" class="btn">Entrar</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeColaboradoresLogin()">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="cajaLoginModal" class="modal">
-        <div class="modal-content">
-            <h2>Caja de Encuentro</h2>
-            <form onsubmit="verifyCajaPassword(event)">
-                <div class="form-group">
-                    <label for="cajaPass">Contraseña</label>
-                    <input type="password" id="cajaPass" autofocus required>
-                </div>
-                <div id="cajaError" class="error-message"></div>
-                <div class="modal-buttons">
-                    <button type="submit" class="btn">Entrar</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeCajaLogin()">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Botón Admin Secreto -->
+    <button class="admin-secret-btn" onclick="openAdminModal()" title="🔐">⚙️</button>
 
     <script>
-        const PASSWORDS = {
-            colaboradores: 'sc2024',
-            caja: 'caja2024'
-        };
+        const ADMIN_PASSWORD = 'admin123'; // Cambiar esto
+        const SCRIPT_URL_KEY = 'encuentro_scriptUrl';
 
-        let sessionState = {
-            colaboradoresAuth: false,
-            cajaAuth: false,
-            scriptUrl: null
+        let appState = {
+            isAdmin: false,
+            scriptUrl: null,
+            currentContentType: ''
         };
 
         const contentConfig = {
             show: { title: '🎬 Show', subtitle: 'Videos y contenido del show' },
-            stands: { title: '🏪 Stands', subtitle: 'Información de stands y expositores' },
+            stands: { title: '🏪 Stands', subtitle: 'Información de stands' },
             fixture: { title: '📋 Fixture', subtitle: 'Horarios y resultados' },
             plano: { title: '🗺️ Plano & Canchas', subtitle: 'Mapa del encuentro' },
             sponsors: { title: '🤝 Sponsors', subtitle: 'Empresas patrocinadoras' }
         };
 
-        let currentContentType = '';
+        let pdfState = {};
 
-        // Setup
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVuOc5ZnTdHhiGJ799GtnKj8ilFUxM3vnJeqTXW6BMExNiNJpJ6mZsd1LALjfA_i8-7Q/exec';
-
-        function setupScript() {
-            sessionState.scriptUrl = SCRIPT_URL;
-            localStorage.setItem('encuentro_scriptUrl', SCRIPT_URL);
-            
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('welcomeScreen').classList.add('active');
+        // === ADMIN FUNCTIONS ===
+        function openAdminModal() {
+            document.getElementById('adminError').textContent = '';
+            document.getElementById('adminPass').value = '';
+            document.getElementById('adminModal').classList.add('active');
         }
 
-        function resetConfig() {
-            // Las URLs no se resetean, la app siempre usa la configurada
-            goToMain();
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminError').textContent = '';
         }
 
-        function loadConfig() {
-            sessionState.scriptUrl = SCRIPT_URL;
-            localStorage.setItem('encuentro_scriptUrl', SCRIPT_URL);
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('welcomeScreen').classList.add('active');
-        }
-
-        // Navigation
-        function goToMain() {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('mainScreen').classList.add('active');
-        }
-
-        // Colaboradores
-        function openColaboradoresLogin() {
-            document.getElementById('colaboradoresError').textContent = '';
-            document.getElementById('colaboradoresPass').value = '';
-            document.getElementById('colaboradoresLoginModal').classList.add('active');
-        }
-
-        function closeColaboradoresLogin() {
-            document.getElementById('colaboradoresLoginModal').classList.remove('active');
-        }
-
-        function verifyColaboradoresPassword(e) {
+        function verifyAdminPassword(e) {
             e.preventDefault();
-            const pass = document.getElementById('colaboradoresPass').value;
+            const pass = document.getElementById('adminPass').value;
             
-            if (pass === PASSWORDS.colaboradores) {
-                sessionState.colaboradoresAuth = true;
-                closeColaboradoresLogin();
-                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                document.getElementById('colaboradoresScreen').classList.add('active');
+            if (pass === ADMIN_PASSWORD) {
+                appState.isAdmin = true;
+                const saved = localStorage.getItem(SCRIPT_URL_KEY);
+                if (saved) {
+                    document.getElementById('adminScriptUrl').value = saved;
+                    appState.scriptUrl = saved;
+                }
+                closeAdminModal();
+                showScreen('adminPanel');
             } else {
-                document.getElementById('colaboradoresError').textContent = 'Contraseña incorrecta';
+                document.getElementById('adminError').textContent = 'Contraseña incorrecta';
             }
         }
 
-        // Caja
-        function openCajaLogin() {
-            document.getElementById('cajaError').textContent = '';
-            document.getElementById('cajaPass').value = '';
-            document.getElementById('cajaLoginModal').classList.add('active');
-        }
-
-        function closeCajaLogin() {
-            document.getElementById('cajaLoginModal').classList.remove('active');
-        }
-
-        function verifyCajaPassword(e) {
-            e.preventDefault();
-            const pass = document.getElementById('cajaPass').value;
+        function saveAdminConfig() {
+            const url = document.getElementById('adminScriptUrl').value.trim();
             
-            if (pass === PASSWORDS.caja) {
-                sessionState.cajaAuth = true;
-                closeCajaLogin();
-                alert('✅ Acceso a Caja de Encuentro');
-            } else {
-                document.getElementById('cajaError').textContent = 'Contraseña incorrecta';
+            if (!url || !url.includes('script.google.com')) {
+                alert('URL no válida');
+                return;
             }
+            
+            appState.scriptUrl = url;
+            localStorage.setItem(SCRIPT_URL_KEY, url);
+            
+            document.getElementById('adminSuccess').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('adminSuccess').style.display = 'none';
+            }, 3000);
         }
 
-        // Content
+        function logoutAdmin() {
+            appState.isAdmin = false;
+            document.getElementById('adminScriptUrl').value = '';
+            showScreen('publicMainScreen');
+        }
+
+        function goToPublicApp() {
+            showScreen('publicMainScreen');
+        }
+
+        // === PUBLIC APP FUNCTIONS ===
         function openContent(type) {
             const config = contentConfig[type];
             document.getElementById('contentTitle').textContent = config.title;
             document.getElementById('contentSubtitle').textContent = config.subtitle;
             
-            currentContentType = type;
+            appState.currentContentType = type;
             loadFiles(type);
             
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('contentScreen').classList.add('active');
+            showScreen('publicContentScreen');
         }
 
-        function getFileIcon(fileName) {
-            if (fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) return '🖼️';
-            if (fileName.match(/\.(mp4|webm|mov|avi)$/i)) return '🎥';
-            if (fileName.match(/\.pdf$/i)) return '📄';
-            if (fileName.match(/\.(xlsx|xls)$/i)) return '📊';
-            if (fileName.match(/\.(doc|docx)$/i)) return '📝';
-            return '📎';
-        }
-
-        // Files
-        function handleFileSelect(e) {
-            const files = Array.from(e.target.files);
-            files.forEach(file => uploadFile(currentContentType, file));
-            document.getElementById('fileInput').value = '';
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('uploadArea').classList.remove('dragover');
-            
-            const files = Array.from(e.dataTransfer.files);
-            files.forEach(file => uploadFile(currentContentType, file));
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            document.getElementById('uploadArea').classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            document.getElementById('uploadArea').classList.remove('dragover');
-        }
-
-        document.getElementById('uploadArea').addEventListener('click', () => {
-            document.getElementById('fileInput').click();
-        });
-
-        function uploadFile(type, file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const fileData = e.target.result;
-                
-                fetch(sessionState.scriptUrl, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        section: type,
-                        fileName: file.name,
-                        fileData: fileData
-                    })
-                })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success) {
-                        loadFiles(type);
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
-                })
-                .catch(err => {
-                    console.error('Error:', err);
-                    alert('Error al subir. Verifica la URL del Script.');
-                });
-            };
-            reader.readAsDataURL(file);
+        function goBackToMenu() {
+            showScreen('publicMainScreen');
         }
 
         function loadFiles(type) {
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '<div class="empty-message"><span class="loading-spinner"></span>Cargando...</div>';
             
-            fetch(`${sessionState.scriptUrl}?action=getFiles&section=${type}`)
+            fetch(`${appState.scriptUrl}?action=getFiles&section=${type}`)
             .then(r => r.json())
             .then(data => {
                 if (data.success && data.files.length > 0) {
                     let html = '';
                     const pdfFiles = data.files.filter(f => f.fileName.match(/\.pdf$/i));
-                    const otherFiles = data.files.filter(f => !f.fileName.match(/\.pdf$/i));
                     
-                    // Mostrar PDFs primero con visor
                     pdfFiles.forEach((file, idx) => {
                         html += `
                             <div class="pdf-container">
                                 <div class="pdf-header">
                                     <div class="title">📄 ${file.fileName}</div>
                                     <div class="pdf-controls">
-                                        <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Descargar</a>
+                                        <a href="${file.fileLink}" target="_blank" style="text-decoration: none;">
+                                            <button>↓ Descargar</button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="pdf-viewer">
                                     <div class="pdf-page" id="pdf-page-${idx}">
                                         <div style="color: #999; text-align: center;">
-                                            <div class="loading-spinner" style="display: inline-block;"></div>
-                                            Renderizando PDF...
+                                            <div class="loading-spinner"></div>
+                                            Cargando PDF...
                                         </div>
                                     </div>
                                     <div class="pdf-nav" id="pdf-nav-${idx}" style="display: none;">
@@ -928,46 +620,22 @@
                         `;
                     });
                     
-                    // Mostrar otros archivos
-                    if (otherFiles.length > 0) {
-                        html += otherFiles.map((file, idx) => `
-                            <div class="file-item">
-                                <div class="file-item-icon">${getFileIcon(file.fileName)}</div>
-                                <div class="file-item-info">
-                                    <div class="name">${file.fileName}</div>
-                                    <div class="meta">${file.fileSize} KB • ${file.uploadedAt}</div>
-                                </div>
-                                <div class="file-item-actions">
-                                    <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Ver</a>
-                                    <button class="delete-btn" onclick="deleteFile('${type}', '${file.fileName}')">✕</button>
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                    
                     fileList.innerHTML = html;
                     
-                    // Renderizar PDFs
                     pdfFiles.forEach((file, idx) => {
                         renderPdfPreview(file.fileLink, idx);
                     });
                 } else {
-                    fileList.innerHTML = '<div class="empty-message">No hay archivos cargados aún</div>';
+                    fileList.innerHTML = '<div class="empty-message">No hay archivos disponibles</div>';
                 }
             })
             .catch(err => {
-                fileList.innerHTML = '<div class="empty-message">Error al cargar archivos</div>';
+                fileList.innerHTML = '<div class="empty-message">Error al cargar contenido</div>';
             });
         }
 
-        // Variables globales para PDFs
-        const pdfState = {};
-
         function renderPdfPreview(fileLink, pageIdx) {
-            // Extraer ID del archivo de Drive
             let fileId = null;
-            
-            // Formato: https://drive.google.com/file/d/FILE_ID/view
             const match = fileLink.match(/\/file\/d\/([a-zA-Z0-9-_]+)/);
             if (match) {
                 fileId = match[1];
@@ -976,12 +644,11 @@
             if (!fileId) {
                 const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
                 if (pageDiv) {
-                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">No se pudo extraer el ID del archivo. <a href="' + fileLink + '" target="_blank" style="color: #667eea;">Ver en Drive</a></div>';
+                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;"><a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Ver en Google Drive →</a></div>';
                 }
                 return;
             }
             
-            // URL directa para descargar desde Drive sin CORS
             const pdfUrl = `https://drive.google.com/uc?export=pdf&id=${fileId}`;
             
             pdfjsLib.getDocument({
@@ -991,16 +658,14 @@
                 pdfState[pageIdx] = { pdf, currentPage: 1 };
                 renderPdfPage(pageIdx, 1);
                 
-                // Mostrar controles de navegación si hay más de una página
                 if (pdf.numPages > 1) {
                     document.getElementById(`pdf-nav-${pageIdx}`).style.display = 'flex';
                     document.getElementById(`pdf-total-${pageIdx}`).textContent = pdf.numPages;
                 }
             }).catch(err => {
-                console.error('Error loading PDF:', err);
                 const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
                 if (pageDiv) {
-                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">No se puede renderizar el PDF. <a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Haz clic aquí para ver en Google Drive →</a></div>';
+                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;"><a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Ver en Google Drive →</a></div>';
                 }
             });
         }
@@ -1026,8 +691,6 @@
                     
                     state.currentPage = pageNum;
                     document.getElementById(`pdf-current-${pageIdx}`).textContent = pageNum;
-                    
-                    // Actualizar botones
                     document.getElementById(`pdf-prev-${pageIdx}`).disabled = pageNum === 1;
                     document.getElementById(`pdf-next-${pageIdx}`).disabled = pageNum === state.pdf.numPages;
                 });
@@ -1048,14 +711,19 @@
             }
         }
 
-        function deleteFile(type, fileName) {
-            if (confirm('¿Eliminar este archivo?')) {
-                // Aquí iría la lógica de eliminación si agregas más funciones al Apps Script
-                alert('Función de eliminar pendiente');
-            }
+        // === UTILITIES ===
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
 
-        loadConfig();
+        // Inicializar
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem(SCRIPT_URL_KEY);
+            if (saved) {
+                appState.scriptUrl = saved;
+            }
+        });
     </script>
 </body>
 </html>
