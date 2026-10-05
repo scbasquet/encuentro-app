@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -34,7 +34,6 @@
             display: block;
         }
 
-        /* Pantalla de Bienvenida */
         .welcome-screen {
             background: white;
             border-radius: 12px;
@@ -80,6 +79,12 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-secondary {
             background: #f0f0f0;
             color: #333;
@@ -89,12 +94,6 @@
             background: #e0e0e0;
         }
 
-        .btn-secondary.active {
-            background: #667eea;
-            color: white;
-        }
-
-        /* Pantalla Principal */
         .main-screen {
             background: white;
             border-radius: 12px;
@@ -139,10 +138,6 @@
             transform: translateY(-4px);
         }
 
-        .menu-item.locked {
-            opacity: 0.9;
-        }
-
         .menu-item .icon {
             font-size: 32px;
             margin-bottom: 10px;
@@ -166,7 +161,6 @@
             margin-top: 20px;
         }
 
-        /* Modal Login */
         .modal {
             display: none;
             position: fixed;
@@ -217,7 +211,6 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus {
@@ -233,6 +226,13 @@
             text-align: center;
         }
 
+        .success-message {
+            color: #2e7d32;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
         .modal-buttons {
             display: flex;
             gap: 10px;
@@ -243,7 +243,6 @@
             flex: 1;
         }
 
-        /* Pantalla Colaboradores */
         .colaboradores-screen {
             background: white;
             border-radius: 12px;
@@ -258,17 +257,11 @@
             text-align: center;
         }
 
-        .colaboradores-screen .subtitle {
-            color: #999;
-            font-size: 12px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
         .collaborator-menu {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-bottom: 20px;
         }
 
         .collaborator-item {
@@ -296,7 +289,6 @@
             font-weight: 600;
         }
 
-        /* Pantalla de Contenido */
         .content-screen {
             background: white;
             border-radius: 12px;
@@ -361,6 +353,7 @@
             background: #f9f9f9;
             border-radius: 10px;
             padding: 15px;
+            margin-bottom: 20px;
         }
 
         .file-item {
@@ -369,30 +362,19 @@
             border-radius: 8px;
             margin-bottom: 12px;
             border: 1px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .file-item:hover {
-            border-color: #667eea;
-            background: #f9f9ff;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
         }
 
         .file-item:last-child {
             margin-bottom: 0;
         }
 
-        .file-item-content {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-        }
-
         .file-item-icon {
             font-size: 32px;
             min-width: 40px;
-            text-align: center;
         }
 
         .file-item-info {
@@ -405,12 +387,12 @@
             font-weight: 600;
             font-size: 14px;
             word-break: break-word;
-            margin-bottom: 4px;
         }
 
         .file-item .meta {
             font-size: 12px;
             color: #999;
+            margin-top: 4px;
         }
 
         .file-item-actions {
@@ -419,9 +401,7 @@
             min-width: fit-content;
         }
 
-        .file-item .download-btn {
-            background: #e3f2fd;
-            color: #667eea;
+        .file-item .download-btn, .file-item .delete-btn {
             border: none;
             padding: 6px 12px;
             border-radius: 6px;
@@ -429,6 +409,11 @@
             font-size: 12px;
             transition: all 0.3s ease;
             font-weight: 500;
+        }
+
+        .file-item .download-btn {
+            background: #e3f2fd;
+            color: #667eea;
         }
 
         .file-item .download-btn:hover {
@@ -439,31 +424,11 @@
         .file-item .delete-btn {
             background: #ffebee;
             color: #d84315;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            font-weight: 500;
         }
 
         .file-item .delete-btn:hover {
             background: #ef5350;
             color: white;
-        }
-
-        .file-preview-container {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .file-preview-img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 6px;
-            object-fit: cover;
         }
 
         .empty-message {
@@ -473,43 +438,56 @@
             padding: 20px;
         }
 
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 5px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         @media (max-width: 480px) {
             .menu-grid {
                 grid-template-columns: 1fr;
             }
 
-            .welcome-screen h1 {
-                font-size: 24px;
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .modal-content {
-                width: 95%;
+            .file-item-actions {
+                width: 100%;
+            }
+
+            .file-item-actions button {
+                flex: 1;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Pantalla de Bienvenida -->
-        <div id="welcomeScreen" class="screen active welcome-screen">
+
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen welcome-screen">
             <div class="logo">🏀</div>
             <h1>XXI Encuentro Nacional</h1>
             <p class="subtitle">de Mini Básquet</p>
             <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Club Independiente de Tandil</p>
             
             <button class="btn" onclick="goToMain()">Entrar</button>
-            <button class="btn btn-secondary" onclick="toggleDownloadInfo()">📲 Descargar App</button>
-            
-            <div id="downloadInfo" style="display: none; margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; text-align: left;">
-                <p style="font-size: 13px; color: #666; line-height: 1.6;">
-                    <strong>Guardar como app en tu dispositivo:</strong><br>
-                    📱 <strong>iOS:</strong> Toca Compartir → Agregar a Pantalla de Inicio<br>
-                    🤖 <strong>Android:</strong> Toca el menú ⋮ → Instalar app
-                </p>
-            </div>
         </div>
 
-        <!-- Pantalla Principal -->
+        <!-- Main Screen -->
         <div id="mainScreen" class="screen main-screen">
             <h1>XXI Encuentro Nacional</h1>
             <p class="subtitle">Mini Básquet</p>
@@ -535,27 +513,18 @@
                     <div class="icon">🤝</div>
                     <div class="label">Sponsors</div>
                 </div>
-                <div class="menu-item locked" onclick="openColaboradoresLogin()">
+                <div class="menu-item" onclick="openColaboradoresLogin()">
                     <div class="icon">🔐</div>
                     <div class="label">Colaboradores (SC)</div>
                     <div class="lock-icon">Requiere clave</div>
                 </div>
             </div>
-
-            <button class="btn btn-secondary" onclick="toggleDownloadInfo2()">📲 Descargar App</button>
-            <div id="downloadInfo2" style="display: none; margin-top: 15px; padding: 15px; background: #f5f5f5; border-radius: 8px; text-align: left;">
-                <p style="font-size: 13px; color: #666; line-height: 1.6;">
-                    <strong>Guardar como app en tu dispositivo:</strong><br>
-                    📱 <strong>iOS:</strong> Toca Compartir → Agregar a Pantalla de Inicio<br>
-                    🤖 <strong>Android:</strong> Toca el menú ⋮ → Instalar app
-                </p>
-            </div>
         </div>
 
-        <!-- Pantalla Colaboradores -->
+        <!-- Colaboradores Screen -->
         <div id="colaboradoresScreen" class="screen colaboradores-screen">
             <h1>Colaboradores (SC)</h1>
-            <p class="subtitle">Acceso restringido</p>
+            <p class="subtitle" style="margin-bottom: 30px;">Acceso restringido</p>
 
             <div class="collaborator-menu">
                 <div class="collaborator-item" onclick="openCajaLogin()">
@@ -567,7 +536,7 @@
             <button class="btn btn-back" onclick="goToMain()">← Volver</button>
         </div>
 
-        <!-- Pantalla de Contenido Genérico -->
+        <!-- Content Screen -->
         <div id="contentScreen" class="screen content-screen">
             <h1 id="contentTitle">Contenido</h1>
             <p class="subtitle" id="contentSubtitle"></p>
@@ -585,7 +554,7 @@
         </div>
     </div>
 
-    <!-- Modal Login Colaboradores -->
+    <!-- Modals -->
     <div id="colaboradoresLoginModal" class="modal">
         <div class="modal-content">
             <h2>Colaboradores (SC)</h2>
@@ -603,7 +572,6 @@
         </div>
     </div>
 
-    <!-- Modal Login Caja -->
     <div id="cajaLoginModal" class="modal">
         <div class="modal-content">
             <h2>Caja de Encuentro</h2>
@@ -622,35 +590,57 @@
     </div>
 
     <script>
-        // Configuración de contraseñas
         const PASSWORDS = {
-            colaboradores: 'sc2024', // Cambiar
-            caja: 'caja2024' // Cambiar
+            colaboradores: 'sc2024',
+            caja: 'caja2024'
         };
 
-        // Estado de sesión
         let sessionState = {
             colaboradoresAuth: false,
-            cajaAuth: false
+            cajaAuth: false,
+            scriptUrl: null
         };
 
-        // Navegación
+        const contentConfig = {
+            show: { title: '🎬 Show', subtitle: 'Videos y contenido del show' },
+            stands: { title: '🏪 Stands', subtitle: 'Información de stands y expositores' },
+            fixture: { title: '📋 Fixture', subtitle: 'Horarios y resultados' },
+            plano: { title: '🗺️ Plano & Canchas', subtitle: 'Mapa del encuentro' },
+            sponsors: { title: '🤝 Sponsors', subtitle: 'Empresas patrocinadoras' }
+        };
+
+        let currentContentType = '';
+
+        // Setup
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVuOc5ZnTdHhiGJ799GtnKj8ilFUxM3vnJeqTXW6BMExNiNJpJ6mZsd1LALjfA_i8-7Q/exec';
+
+        function setupScript() {
+            sessionState.scriptUrl = SCRIPT_URL;
+            localStorage.setItem('encuentro_scriptUrl', SCRIPT_URL);
+            
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('welcomeScreen').classList.add('active');
+        }
+
+        function resetConfig() {
+            // Las URLs no se resetean, la app siempre usa la configurada
+            goToMain();
+        }
+
+        function loadConfig() {
+            sessionState.scriptUrl = SCRIPT_URL;
+            localStorage.setItem('encuentro_scriptUrl', SCRIPT_URL);
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('welcomeScreen').classList.add('active');
+        }
+
+        // Navigation
         function goToMain() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('mainScreen').classList.add('active');
         }
 
-        function toggleDownloadInfo() {
-            const info = document.getElementById('downloadInfo');
-            info.style.display = info.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function toggleDownloadInfo2() {
-            const info = document.getElementById('downloadInfo2');
-            info.style.display = info.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // Colaboradores Login
+        // Colaboradores
         function openColaboradoresLogin() {
             document.getElementById('colaboradoresError').textContent = '';
             document.getElementById('colaboradoresPass').value = '';
@@ -675,7 +665,7 @@
             }
         }
 
-        // Caja Login
+        // Caja
         function openCajaLogin() {
             document.getElementById('cajaError').textContent = '';
             document.getElementById('cajaPass').value = '';
@@ -693,22 +683,13 @@
             if (pass === PASSWORDS.caja) {
                 sessionState.cajaAuth = true;
                 closeCajaLogin();
-                // Aquí irías a la app de Caja
-                alert('✅ Acceso a Caja de Encuentro (por ahora solo placeholder)\nAcá iría tu app de caja existente.');
+                alert('✅ Acceso a Caja de Encuentro');
             } else {
                 document.getElementById('cajaError').textContent = 'Contraseña incorrecta';
             }
         }
 
-        // Contenido
-        const contentConfig = {
-            show: { title: '🎬 Show', subtitle: 'Videos y contenido del show' },
-            stands: { title: '🏪 Stands', subtitle: 'Información de stands y expositores' },
-            fixture: { title: '📋 Fixture', subtitle: 'Horarios y resultados' },
-            plano: { title: '🗺️ Plano & Canchas', subtitle: 'Mapa del encuentro y ubicación de canchas' },
-            sponsors: { title: '🤝 Sponsors', subtitle: 'Empresas patrocinadoras' }
-        };
-
+        // Content
         function openContent(type) {
             const config = contentConfig[type];
             document.getElementById('contentTitle').textContent = config.title;
@@ -721,12 +702,19 @@
             document.getElementById('contentScreen').classList.add('active');
         }
 
-        // Manejo de archivos
-        let currentContentType = '';
+        function getFileIcon(fileName) {
+            if (fileName.match(/\.(jpg|jpeg|png|gif|webp)$/i)) return '🖼️';
+            if (fileName.match(/\.(mp4|webm|mov|avi)$/i)) return '🎥';
+            if (fileName.match(/\.pdf$/i)) return '📄';
+            if (fileName.match(/\.(xlsx|xls)$/i)) return '📊';
+            if (fileName.match(/\.(doc|docx)$/i)) return '📝';
+            return '📎';
+        }
 
+        // Files
         function handleFileSelect(e) {
             const files = Array.from(e.target.files);
-            files.forEach(file => addFile(currentContentType, file));
+            files.forEach(file => uploadFile(currentContentType, file));
             document.getElementById('fileInput').value = '';
         }
 
@@ -736,7 +724,7 @@
             document.getElementById('uploadArea').classList.remove('dragover');
             
             const files = Array.from(e.dataTransfer.files);
-            files.forEach(file => addFile(currentContentType, file));
+            files.forEach(file => uploadFile(currentContentType, file));
         }
 
         function handleDragOver(e) {
@@ -754,93 +742,73 @@
             document.getElementById('fileInput').click();
         });
 
-        function addFile(type, file) {
-            let files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
-            
+        function uploadFile(type, file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                files.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    data: e.target.result,
-                    uploadedAt: new Date().toLocaleString()
+                const fileData = e.target.result;
+                
+                fetch(sessionState.scriptUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        section: type,
+                        fileName: file.name,
+                        fileData: fileData
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        loadFiles(type);
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    alert('Error al subir. Verifica la URL del Script.');
                 });
-                localStorage.setItem(`encuentro_${type}`, JSON.stringify(files));
-                loadFiles(type);
             };
             reader.readAsDataURL(file);
         }
 
-        function getFileIcon(mimeType, fileName) {
-            if (mimeType.startsWith('image/')) return '🖼️';
-            if (mimeType.startsWith('video/')) return '🎥';
-            if (mimeType === 'application/pdf') return '📄';
-            if (fileName.includes('.xlsx') || fileName.includes('.xls')) return '📊';
-            if (fileName.includes('.doc')) return '📝';
-            if (mimeType.startsWith('audio/')) return '🔊';
-            return '📎';
-        }
-
         function loadFiles(type) {
-            const files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
             const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '<div class="empty-message"><span class="loading-spinner"></span>Cargando...</div>';
             
-            if (files.length === 0) {
-                fileList.innerHTML = '<div class="empty-message">No hay archivos cargados aún</div>';
-                return;
-            }
-
-            fileList.innerHTML = files.map((file, idx) => {
-                const isImage = file.type.startsWith('image/');
-                const fileSize = (file.size / 1024).toFixed(1); // KB
-                const icon = getFileIcon(file.type, file.name);
-                
-                return `
-                    <div class="file-item">
-                        <div class="file-item-content">
-                            <div class="file-item-icon">${icon}</div>
+            fetch(`${sessionState.scriptUrl}?action=getFiles&section=${type}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.files.length > 0) {
+                    fileList.innerHTML = data.files.map((file, idx) => `
+                        <div class="file-item">
+                            <div class="file-item-icon">${getFileIcon(file.fileName)}</div>
                             <div class="file-item-info">
-                                <div class="name">${file.name}</div>
-                                <div class="meta">
-                                    ${fileSize} KB • ${file.uploadedAt}
-                                </div>
-                                ${isImage ? `<div class="file-preview-container">
-                                    <img src="${file.data}" class="file-preview-img" alt="Preview">
-                                </div>` : ''}
+                                <div class="name">${file.fileName}</div>
+                                <div class="meta">${file.fileSize} KB • ${file.uploadedAt}</div>
                             </div>
                             <div class="file-item-actions">
-                                <button class="download-btn" onclick="downloadFile('${type}', ${idx})">↓ Descargar</button>
-                                <button class="delete-btn" onclick="deleteFile('${type}', ${idx})">✕</button>
+                                <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Ver</a>
+                                <button class="delete-btn" onclick="deleteFile('${type}', '${file.fileName}')">✕</button>
                             </div>
                         </div>
-                    </div>
-                `;
-            }).join('');
+                    `).join('');
+                } else {
+                    fileList.innerHTML = '<div class="empty-message">No hay archivos cargados aún</div>';
+                }
+            })
+            .catch(err => {
+                fileList.innerHTML = '<div class="empty-message">Error al cargar archivos</div>';
+            });
         }
 
-        function downloadFile(type, idx) {
-            const files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
-            const file = files[idx];
-            
-            if (!file) return;
-            
-            const link = document.createElement('a');
-            link.href = file.data;
-            link.download = file.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function deleteFile(type, idx) {
+        function deleteFile(type, fileName) {
             if (confirm('¿Eliminar este archivo?')) {
-                let files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
-                files.splice(idx, 1);
-                localStorage.setItem(`encuentro_${type}`, JSON.stringify(files));
-                loadFiles(type);
+                // Aquí iría la lógica de eliminación si agregas más funciones al Apps Script
+                alert('Función de eliminar pendiente');
             }
         }
+
+        loadConfig();
     </script>
 </body>
 </html>
