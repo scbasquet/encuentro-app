@@ -49,7 +49,7 @@
   .marquesina:hover .marquesina-pista { animation-play-state: paused; }
   @keyframes desliz { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) { .marquesina-pista { animation: none; } }
-  .sponsor-strip-logo { height: 26px; width: auto; object-fit: contain; flex-shrink: 0; border-radius: 5px; display: block; }
+  .sponsor-strip-logo { height: 52px; width: auto; object-fit: contain; flex-shrink: 0; border-radius: 6px; display: block; }
   .sponsor-strip-vacio { color: rgba(255,255,255,0.25); font-size: 10px; }
 
   /* ===== BOTTOM NAV ===== */
@@ -400,7 +400,7 @@
 </div>
 
 <button class="admin-secret-btn" onclick="abrirModalAdmin()" title="🔐">⚙️</button>
-<div class="version-badge">v16</div>
+<div class="version-badge">v18</div>
 
 <div id="adminModal" class="modal">
   <div class="modal-content">
@@ -462,8 +462,7 @@
       return;
     }
 
-    // se duplica la tanda para que el loop no tenga corte
-    const tanda = () => SPONSORS.map(s => {
+    const unaTanda = () => SPONSORS.map(s => {
       const img = document.createElement('img');
       img.className = 'sponsor-strip-logo';
       img.src = s.logo;
@@ -477,12 +476,54 @@
       return a;
     });
 
+    // primero una sola tanda, para poder medirla
+    pista.style.animation = 'none';
     pista.innerHTML = '';
-    tanda().forEach(el => pista.appendChild(el));
-    tanda().forEach(el => { el.setAttribute('aria-hidden', 'true'); pista.appendChild(el); });
+    unaTanda().forEach(el => pista.appendChild(el));
 
-    // con un solo logo el recorrido es corto: lo hacemos mas lento
-    pista.style.animationDuration = Math.max(14, SPONSORS.length * 11) + 's';
+    const completar = () => {
+      const anchoTanda = pista.scrollWidth;
+      const anchoVisible = pista.parentNode.offsetWidth;
+      if (!anchoTanda || !anchoVisible) return;
+
+      // repetir hasta tapar la pantalla, asi la copia del loop queda afuera
+      const repes = Math.max(1, Math.ceil(anchoVisible / anchoTanda));
+      pista.innerHTML = '';
+      for (let i = 0; i < repes; i++) {
+        unaTanda().forEach(el => pista.appendChild(el));
+      }
+      // y ahora si, la copia que entra cuando la primera termina de salir
+      for (let i = 0; i < repes; i++) {
+        unaTanda().forEach(el => {
+          el.setAttribute('aria-hidden', 'true');
+          pista.appendChild(el);
+        });
+      }
+
+      const recorrido = pista.scrollWidth / 2;
+      pista.style.animation = '';
+      pista.style.animationDuration = Math.round(recorrido / 28) + 's';
+    };
+
+    // esperar a que carguen los logos para medir bien
+    const imgs = Array.from(pista.querySelectorAll('img'));
+    let faltan = imgs.filter(i => !i.complete).length;
+    if (faltan === 0) {
+      requestAnimationFrame(completar);
+    } else {
+      imgs.forEach(i => {
+        if (i.complete) return;
+        const listo = () => { if (--faltan === 0) requestAnimationFrame(completar); };
+        i.addEventListener('load', listo);
+        i.addEventListener('error', listo);
+      });
+    }
+
+    let timer;
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(armarMarquesina, 300);
+    });
   }
 
   // ===== NAVEGACION =====
