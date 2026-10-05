@@ -634,21 +634,37 @@
             });
         }
 
+        function extractFileId(url) {
+            if (!url) return null;
+            
+            // Formato: /file/d/ID
+            let match = url.match(/\/file\/d\/([a-zA-Z0-9-_]+)/);
+            if (match) return match[1];
+            
+            // Formato: d=ID
+            match = url.match(/[?&]d=([a-zA-Z0-9-_]+)/);
+            if (match) return match[1];
+            
+            // Formato: /d/ID/
+            match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (match) return match[1];
+            
+            // Formato: id=ID
+            match = url.match(/[?&]id=([a-zA-Z0-9-_]+)/);
+            if (match) return match[1];
+            
+            return null;
+        }
+
         function renderPdfPreview(fileLink, pageIdx) {
-            let fileId = null;
-            const match = fileLink.match(/\/file\/d\/([a-zA-Z0-9-_]+)/);
-            if (match) {
-                fileId = match[1];
-            }
+            const fileId = extractFileId(fileLink);
             
             if (!fileId) {
-                const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
-                if (pageDiv) {
-                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;"><a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Ver en Google Drive →</a></div>';
-                }
+                showPdfError(pageIdx, fileLink, 'No se pudo extraer el ID del archivo');
                 return;
             }
             
+            // Intentar con URL de exportación directa
             const pdfUrl = `https://drive.google.com/uc?export=pdf&id=${fileId}`;
             
             pdfjsLib.getDocument({
@@ -663,11 +679,23 @@
                     document.getElementById(`pdf-total-${pageIdx}`).textContent = pdf.numPages;
                 }
             }).catch(err => {
+                console.error('Error cargando PDF:', err);
+                // Fallback: Mostrar iframe de Google Drive Viewer
                 const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
                 if (pageDiv) {
-                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;"><a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Ver en Google Drive →</a></div>';
+                    pageDiv.innerHTML = `<iframe src="https://drive.google.com/file/d/${fileId}/preview" width="100%" height="500" frameborder="0" allowfullscreen=""></iframe>`;
                 }
             });
+        }
+
+        function showPdfError(pageIdx, fileLink, message) {
+            const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
+            if (pageDiv) {
+                pageDiv.innerHTML = `<div style="color: #d84315; padding: 20px; text-align: center;">
+                    <p>${message}</p>
+                    <a href="${fileLink}" target="_blank" style="color: #667eea; font-weight: 600; display: inline-block; margin-top: 10px;">Ver en Google Drive →</a>
+                </div>`;
+            }
         }
 
         function renderPdfPage(pageIdx, pageNum) {
