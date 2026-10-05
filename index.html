@@ -155,7 +155,37 @@
   .link-btn { display: block; margin: 0 14px 10px; background: var(--rojo); color: var(--blanco); text-align: center; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 700; text-decoration: none; letter-spacing: 1px; font-family: 'Oswald', sans-serif; box-shadow: 0 4px 12px rgba(192,57,43,0.45); }
   .nota { margin: 0 14px 14px; background: var(--blanco); border-radius: 10px; padding: 13px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); font-size: 12px; line-height: 1.6; color: var(--gris-texto); }
 
-  /* ===== ADMIN ===== */
+  /* ===== CONCURSO DE FOTOS ===== */
+  .concurso { background: var(--negro); margin: 14px; border-radius: 14px; padding: 18px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  .concurso-tag { display: inline-block; background: var(--rojo); color: #fff; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; font-family: 'Oswald', sans-serif; }
+  .concurso-titulo { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: #fff; letter-spacing: 2px; margin: 10px 0 8px; line-height: 1; }
+  .concurso-texto { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.75); }
+  .concurso-texto strong { color: var(--dorado); }
+
+  .form-card { background: #fff; margin: 0 14px; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .letra-chica { font-size: 11px; color: #999; line-height: 1.5; margin-top: 10px; }
+
+  .galeria { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 14px 16px; }
+  .foto-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
+  .foto-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #eee; }
+  .foto-pie { padding: 7px 9px; }
+  .foto-autor { font-size: 11px; font-weight: 600; font-family: 'Oswald', sans-serif; color: var(--negro); }
+  .foto-equipo { font-size: 10px; color: var(--gris-texto); }
+  .galeria-vacia { grid-column: 1 / -1; text-align: center; font-size: 12px; color: #999; padding: 24px 0; }
+
+  .mod-item { display: flex; gap: 10px; align-items: center; padding: 8px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 8px; background: #fafafa; }
+  .mod-item img { width: 62px; height: 62px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #eee; }
+  .mod-datos { flex: 1; text-align: left; min-width: 0; }
+  .mod-autor { font-size: 12px; font-weight: 600; }
+  .mod-meta { font-size: 10px; color: #999; }
+  .mod-botones { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+  .mod-btn { border: none; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 600; cursor: pointer; color: #fff; }
+  .mod-ok { background: #2e7d32; }
+  .mod-no { background: #777; }
+  .mod-del { background: var(--rojo); }
+  .mod-btn:disabled { background: #bbb; }
+
+  /* ===== ADMIN =====
   .admin-secret-btn { position: fixed; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); right: 12px; width: 36px; height: 36px; background: rgba(192,57,43,0.18); border: 1px solid rgba(192,57,43,0.3); border-radius: 50%; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; z-index: 99; }
   .version-badge { position: fixed; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); left: 12px; background: rgba(0,0,0,0.25); color: rgba(255,255,255,0.9); padding: 3px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; z-index: 99; }
 
@@ -290,6 +320,43 @@
     <div class="cat-content" id="cont-show-anterior"></div>
   </div>
 
+  <!-- ============ FOTOS ============ -->
+  <div class="screen" id="screen-fotos">
+    <div class="concurso">
+      <div class="concurso-tag">Concurso</div>
+      <div class="concurso-titulo">LA FOTO DE LA AMISTAD</div>
+      <p class="concurso-texto">
+        Sacate una foto con alguien de otro equipo y mostranos la amistad que nace en la cancha.
+        Puede ser de a dos o todo el equipo junto. Hay <strong>premios sorpresa</strong> para las mejores.
+      </p>
+    </div>
+
+    <div class="sec-title"><div class="sec-title-bar"></div><span class="sec-title-text">Subí tu foto</span></div>
+    <div class="form-card">
+      <div class="form-group">
+        <label for="fotoAutor">Tu nombre</label>
+        <input type="text" id="fotoAutor" placeholder="Nombre y apellido" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label for="fotoEquipo">Tu club o equipo</label>
+        <input type="text" id="fotoEquipo" placeholder="Ej: Independiente de Tandil" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label for="fotoArchivo">La foto</label>
+        <input type="file" id="fotoArchivo" accept="image/*">
+      </div>
+      <button class="btn" onclick="enviarFoto()">📸 Enviar mi foto</button>
+      <div id="fotoStatus" class="upload-status"></div>
+      <p class="letra-chica">
+        Las fotos las revisa la organización antes de publicarse. Al enviarla,
+        confirmás que quienes aparecen están de acuerdo; si hay menores, que lo autoriza una persona responsable.
+      </p>
+    </div>
+
+    <div class="sec-title"><div class="sec-title-bar"></div><span class="sec-title-text">Galería</span></div>
+    <div id="galeria" class="galeria"></div>
+  </div>
+
   <!-- ============ STREAMING ============ -->
   <div class="screen" id="screen-streaming">
     <div class="live-hero">
@@ -385,6 +452,19 @@
       <div id="manageList"></div>
     </div>
 
+    <div class="admin-box">
+      <h3>📸 Fotos del concurso</h3>
+      <div class="form-group">
+        <label for="modEstado">Ver</label>
+        <select id="modEstado" onchange="listarModeracion()">
+          <option value="pendiente">⏳ Pendientes de aprobar</option>
+          <option value="aprobada">✅ Publicadas</option>
+          <option value="rechazada">🚫 Rechazadas</option>
+        </select>
+      </div>
+      <div id="modLista"></div>
+    </div>
+
     <button class="btn btn-sec" onclick="salirAdmin()">← Volver a la app</button>
   </div>
 
@@ -395,12 +475,13 @@
   <button class="nav-item active" id="nav-inicio" onclick="irA('inicio')"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></button>
   <button class="nav-item" id="nav-fixture" onclick="irA('fixture')"><span class="nav-icon">📋</span><span class="nav-label">Fixture</span></button>
   <button class="nav-item" id="nav-show" onclick="irA('show')"><span class="nav-icon">🎬</span><span class="nav-label">Show</span></button>
+  <button class="nav-item" id="nav-fotos" onclick="irA('fotos')"><span class="nav-icon">📸</span><span class="nav-label">Fotos</span></button>
   <button class="nav-item" id="nav-streaming" onclick="irA('streaming')"><span class="nav-icon">📡</span><span class="nav-label">Vivo</span></button>
   <button class="nav-item" id="nav-info" onclick="irA('info')"><span class="nav-icon">ℹ️</span><span class="nav-label">Info</span></button>
 </div>
 
 <button class="admin-secret-btn" onclick="abrirModalAdmin()" title="🔐">⚙️</button>
-<div class="version-badge">v20</div>
+<div class="version-badge">v21</div>
 
 <div id="adminModal" class="modal">
   <div class="modal-content">
@@ -542,6 +623,7 @@
     if (pantalla === 'fixture') cargarSeccion('fixture-u7');
     if (pantalla === 'show') cargarSeccion('show-2026');
     if (pantalla === 'info') cargarSeccion('stands');
+    if (pantalla === 'fotos') cargarGaleria();
   }
 
   function verCat(btn, seccion) {
@@ -648,6 +730,204 @@
     document.body.style.overflow = '';
   }
 
+  // ===== CONCURSO DE FOTOS =====
+  // Las fotos del celular pesan mucho: se achican antes de mandarlas
+  function achicarFoto(file, ladoMax) {
+    return new Promise((resolve, reject) => {
+      const lector = new FileReader();
+      lector.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          let { width: w, height: alto } = img;
+          const escala = Math.min(1, ladoMax / Math.max(w, alto));
+          w = Math.round(w * escala);
+          alto = Math.round(alto * escala);
+
+          const lienzo = document.createElement('canvas');
+          lienzo.width = w;
+          lienzo.height = alto;
+          lienzo.getContext('2d').drawImage(img, 0, 0, w, alto);
+          resolve(lienzo.toDataURL('image/jpeg', 0.82));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      lector.onerror = reject;
+      lector.readAsDataURL(file);
+    });
+  }
+
+  function enviarFoto() {
+    const autor = document.getElementById('fotoAutor').value.trim();
+    const equipo = document.getElementById('fotoEquipo').value.trim();
+    const input = document.getElementById('fotoArchivo');
+    const status = document.getElementById('fotoStatus');
+    const file = input.files && input.files[0];
+
+    if (!autor) { status.innerHTML = '<span class="err">Escribí tu nombre.</span>'; return; }
+    if (!file) { status.innerHTML = '<span class="err">Elegí una foto.</span>'; return; }
+
+    status.innerHTML = '<span class="spinner"></span>Enviando...';
+
+    achicarFoto(file, 1600)
+      .then(dataUrl => fetch(app.scriptUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'subirFoto',
+          fileName: 'foto-' + Date.now() + '.jpg',
+          fileData: dataUrl,
+          autor: autor,
+          equipo: equipo
+        })
+      }))
+      .then(r => r.json())
+      .then(d => {
+        if (d && d.success) {
+          status.innerHTML = '<span class="ok">✅ ¡Listo! La organización la revisa y la publica.</span>';
+          input.value = '';
+        } else {
+          status.innerHTML = '<span class="err">No se pudo enviar. Probá de nuevo.</span>';
+        }
+      })
+      .catch(() => {
+        status.innerHTML = '<span class="err">No se pudo enviar. Revisá la conexión.</span>';
+      });
+  }
+
+  function vistaDrive(fileLink, ancho) {
+    const id = idDeDrive(fileLink);
+    return id ? 'https://drive.google.com/thumbnail?id=' + id + '&sz=w' + ancho : '';
+  }
+
+  function cargarGaleria() {
+    const cont = document.getElementById('galeria');
+    if (!cont) return;
+    cont.innerHTML = '<div class="galeria-vacia"><span class="spinner"></span>Cargando...</div>';
+
+    fetch(app.scriptUrl + '?action=getFotos&estado=aprobada')
+      .then(r => r.json())
+      .then(d => {
+        const fotos = (d && d.fotos) || [];
+        if (fotos.length === 0) {
+          cont.innerHTML = '<div class="galeria-vacia">Todavía no hay fotos publicadas.<br>¡Sé el primero!</div>';
+          return;
+        }
+        cont.innerHTML = '';
+        fotos.forEach(f => {
+          const card = document.createElement('div');
+          card.className = 'foto-card';
+          card.onclick = () => abrirFull(idDeDrive(f.fileLink));
+
+          const img = document.createElement('img');
+          img.src = vistaDrive(f.fileLink, 600);
+          img.alt = f.autor || 'Foto del concurso';
+          img.loading = 'lazy';
+
+          const pie = document.createElement('div');
+          pie.className = 'foto-pie';
+          pie.innerHTML = '<div class="foto-autor">' + (f.autor || '') + '</div>' +
+                          '<div class="foto-equipo">' + (f.equipo || '') + '</div>';
+
+          card.appendChild(img);
+          card.appendChild(pie);
+          cont.appendChild(card);
+        });
+      })
+      .catch(() => {
+        cont.innerHTML = '<div class="galeria-vacia">No se pudo cargar la galería.</div>';
+      });
+  }
+
+  // ===== MODERACION (ADMIN) =====
+  function listarModeracion() {
+    const estado = document.getElementById('modEstado').value;
+    const cont = document.getElementById('modLista');
+    cont.innerHTML = '<div class="manage-vacio"><span class="spinner"></span>Cargando...</div>';
+
+    fetch(app.scriptUrl + '?action=getFotos&estado=' + estado)
+      .then(r => r.json())
+      .then(d => {
+        const fotos = (d && d.fotos) || [];
+        if (fotos.length === 0) {
+          cont.innerHTML = '<div class="manage-vacio">No hay fotos acá.</div>';
+          return;
+        }
+        cont.innerHTML = '';
+        fotos.forEach(f => cont.appendChild(filaModeracion(f, estado)));
+      })
+      .catch(() => {
+        cont.innerHTML = '<div class="manage-vacio">No se pudo leer la lista.</div>';
+      });
+  }
+
+  function filaModeracion(f, estado) {
+    const item = document.createElement('div');
+    item.className = 'mod-item';
+
+    const img = document.createElement('img');
+    img.src = vistaDrive(f.fileLink, 200);
+    img.loading = 'lazy';
+    img.onclick = () => abrirFull(idDeDrive(f.fileLink));
+
+    const datos = document.createElement('div');
+    datos.className = 'mod-datos';
+    datos.innerHTML = '<div class="mod-autor">' + (f.autor || 'Sin nombre') + '</div>' +
+                      '<div class="mod-meta">' + (f.equipo || '') + '</div>' +
+                      '<div class="mod-meta">' + (f.subidaEl || '') + '</div>';
+
+    const botones = document.createElement('div');
+    botones.className = 'mod-botones';
+
+    if (estado !== 'aprobada') {
+      botones.appendChild(botonMod('Publicar', 'mod-ok', () => moderar(f.fileLink, 'aprobada')));
+    }
+    if (estado !== 'rechazada') {
+      botones.appendChild(botonMod('Rechazar', 'mod-no', () => moderar(f.fileLink, 'rechazada')));
+    }
+    botones.appendChild(botonMod('Borrar', 'mod-del', () => {
+      if (confirm('¿Borrar la foto definitivamente?')) borrarFotoConcurso(f.fileLink);
+    }));
+
+    item.appendChild(img);
+    item.appendChild(datos);
+    item.appendChild(botones);
+    return item;
+  }
+
+  function botonMod(texto, clase, accion) {
+    const b = document.createElement('button');
+    b.className = 'mod-btn ' + clase;
+    b.textContent = texto;
+    b.onclick = accion;
+    return b;
+  }
+
+  function moderar(fileLink, estado) {
+    fetch(app.scriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'moderarFoto', fileLink: fileLink, estado: estado })
+    })
+    .then(r => r.json())
+    .then(d => {
+      if (d && d.success) listarModeracion();
+      else alert('No se pudo. ¿Actualizaste el Apps Script?');
+    })
+    .catch(() => alert('No se pudo. ¿Actualizaste el Apps Script?'));
+  }
+
+  function borrarFotoConcurso(fileLink) {
+    fetch(app.scriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'borrarFoto', fileLink: fileLink })
+    })
+    .then(r => r.json())
+    .then(d => {
+      if (d && d.success) listarModeracion();
+      else alert('No se pudo borrar.');
+    })
+    .catch(() => alert('No se pudo borrar.'));
+  }
+
   // ===== CUENTA REGRESIVA =====
   function pintarCuenta() {
     const falta = ARRANQUE - Date.now();
@@ -689,6 +969,7 @@
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       window.scrollTo(0, 0);
       listarArchivos();
+      listarModeracion();
     } else {
       document.getElementById('adminError').textContent = 'Contraseña incorrecta';
     }
