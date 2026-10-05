@@ -592,7 +592,27 @@
 
         @media (max-width: 480px) {
             .menu-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .menu-item {
+                padding: 16px 8px;
+            }
+
+            .menu-item .icon {
+                font-size: 26px;
+                margin-bottom: 6px;
+            }
+
+            .menu-item .label {
+                font-size: 11px;
+                letter-spacing: 0.3px;
+            }
+
+            /* si queda un item solo en la ultima fila, que ocupe el ancho */
+            .menu-item:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
             }
         }
 
@@ -791,7 +811,7 @@
     </div>
 
     <!-- Version Badge -->
-    <div class="version-badge">v10</div>
+    <div class="version-badge">v11</div>
 
     <script>
         const ADMIN_PASSWORD = 'admin123'; // Cambiar esto
