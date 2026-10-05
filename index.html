@@ -964,10 +964,30 @@
         const pdfState = {};
 
         function renderPdfPreview(fileLink, pageIdx) {
-            // Convertir link de Drive a link directo
-            const pdfUrl = fileLink.replace('/view', '/export?format=pdf');
+            // Extraer ID del archivo de Drive
+            let fileId = null;
             
-            pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+            // Formato: https://drive.google.com/file/d/FILE_ID/view
+            const match = fileLink.match(/\/file\/d\/([a-zA-Z0-9-_]+)/);
+            if (match) {
+                fileId = match[1];
+            }
+            
+            if (!fileId) {
+                const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
+                if (pageDiv) {
+                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">No se pudo extraer el ID del archivo. <a href="' + fileLink + '" target="_blank" style="color: #667eea;">Ver en Drive</a></div>';
+                }
+                return;
+            }
+            
+            // URL directa para descargar desde Drive sin CORS
+            const pdfUrl = `https://drive.google.com/uc?export=pdf&id=${fileId}`;
+            
+            pdfjsLib.getDocument({
+                url: pdfUrl,
+                withCredentials: false
+            }).promise.then(pdf => {
                 pdfState[pageIdx] = { pdf, currentPage: 1 };
                 renderPdfPage(pageIdx, 1);
                 
@@ -980,7 +1000,7 @@
                 console.error('Error loading PDF:', err);
                 const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
                 if (pageDiv) {
-                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">Error al cargar PDF. <a href="' + fileLink + '" target="_blank" style="color: #667eea;">Ver en Drive</a></div>';
+                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">No se puede renderizar el PDF. <a href="' + fileLink + '" target="_blank" style="color: #667eea; font-weight: 600;">Haz clic aquí para ver en Google Drive →</a></div>';
                 }
             });
         }
