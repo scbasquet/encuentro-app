@@ -304,8 +304,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            min-height: 400px;
+            padding: 0;
+            min-height: 78vh;
             background: #f9f9f9;
         }
 
@@ -318,22 +318,27 @@
 
         @media (max-width: 768px) {
             .pdf-page {
-                min-height: 250px;
-                padding: 10px;
-            }
-
-            .pdf-page canvas {
-                max-height: 400px;
+                min-height: 72vh;
+                padding: 0;
             }
 
             .pdf-viewer iframe {
                 width: 100% !important;
-                height: 400px !important;
+                height: 72vh !important;
+            }
+
+            .card,
+            .main-screen {
+                padding: 16px 12px;
+            }
+
+            .file-item {
+                padding: 12px 10px;
             }
         }
 
         .pdf-nav {
-            display: flex;
+            display: none !important;
             justify-content: center;
             align-items: center;
             gap: 10px;
@@ -520,6 +525,55 @@
 
         .upload-status .ok { color: #2e7d32; }
         .upload-status .err { color: #c8102e; }
+
+        .btn-full {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .btn-full:hover { background: #c8102e; }
+
+        .full-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 2000;
+        }
+
+        .full-overlay.active { display: block; }
+
+        .full-overlay iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .full-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2001;
+            background: #c8102e;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
         .version-badge {
             position: fixed;
@@ -730,8 +784,14 @@
     <!-- Botón Admin Secreto -->
     <button class="admin-secret-btn" onclick="openAdminModal()" title="🔐">⚙️</button>
 
+    <!-- Visor pantalla completa -->
+    <div id="fullOverlay" class="full-overlay">
+        <button class="full-close" onclick="cerrarFull()">&times;</button>
+        <iframe id="fullFrame" src="" allowfullscreen></iframe>
+    </div>
+
     <!-- Version Badge -->
-    <div class="version-badge">v9</div>
+    <div class="version-badge">v10</div>
 
     <script>
         const ADMIN_PASSWORD = 'admin123'; // Cambiar esto
@@ -1019,12 +1079,33 @@
             iframe.setAttribute('allowfullscreen', '');
             iframe.style.width = '100%';
             iframe.style.height = '100%';
-            iframe.style.minHeight = '420px';
+            iframe.style.minHeight = '320px';
             iframe.style.border = '0';
             iframe.style.borderRadius = '6px';
 
             pageDiv.innerHTML = '';
             pageDiv.appendChild(iframe);
+
+            const full = document.createElement('button');
+            full.className = 'btn-full';
+            full.textContent = '⛶ Pantalla completa';
+            full.onclick = () => abrirFull(fileId);
+            pageDiv.parentNode.appendChild(full);
+        }
+
+        function abrirFull(fileId) {
+            const ov = document.getElementById('fullOverlay');
+            document.getElementById('fullFrame').src =
+                `https://drive.google.com/file/d/${fileId}/preview`;
+            ov.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarFull() {
+            const ov = document.getElementById('fullOverlay');
+            ov.classList.remove('active');
+            document.getElementById('fullFrame').src = '';
+            document.body.style.overflow = '';
         }
 
         function showPdfError(pageIdx, fileLink, message) {
