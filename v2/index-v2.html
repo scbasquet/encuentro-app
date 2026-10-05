@@ -411,6 +411,21 @@
             border-color: rgba(102, 126, 234, 0.4);
         }
 
+        .version-badge {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(100, 100, 100, 0.3);
+            color: #999;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            z-index: 99;
+            border: 1px solid rgba(100, 100, 100, 0.2);
+        }
+
         @media (max-width: 480px) {
             .menu-grid {
                 grid-template-columns: 1fr;
@@ -551,8 +566,8 @@
 
             <!-- Tabs para Show (se muestran solo si es Show) -->
             <div id="showTabs" class="tabs-header" style="display: none;">
-                <button class="tab-btn active" onclick="switchTab('show-2026')">📺 Lo que se viene 2026</button>
-                <button class="tab-btn" onclick="switchTab('show-anterior')">📸 Años anteriores</button>
+                <button class="tab-btn active" data-tab="show-2026" onclick="switchTab('show-2026')">📺 Lo que se viene 2026</button>
+                <button class="tab-btn" data-tab="show-anterior" onclick="switchTab('show-anterior')">📸 Años anteriores</button>
             </div>
 
             <div id="tab-show-2026" class="tab-content active">
@@ -571,6 +586,9 @@
 
     <!-- Botón Admin Secreto -->
     <button class="admin-secret-btn" onclick="openAdminModal()" title="🔐">⚙️</button>
+
+    <!-- Version Badge -->
+    <div class="version-badge">v2</div>
 
     <script>
         const ADMIN_PASSWORD = 'admin123'; // Cambiar esto
@@ -693,8 +711,11 @@
                 selectedTab.classList.add('active');
             }
             
-            // Activar el botón seleccionado
-            event.target.classList.add('active');
+            // Activar el botón seleccionado usando data attribute
+            const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
         }
 
         function goBackToMenu() {
