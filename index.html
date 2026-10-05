@@ -162,6 +162,13 @@
   .concurso-texto { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.75); }
   .concurso-texto strong { color: var(--dorado); }
 
+  .banner-fotos { display: flex; align-items: center; gap: 12px; margin: 0 14px 14px; background: linear-gradient(135deg, var(--rojo) 0%, #8c1f16 100%); border-radius: 12px; padding: 14px; text-decoration: none; box-shadow: 0 4px 14px rgba(192,57,43,0.4); }
+  .banner-fotos-icono { font-size: 26px; flex-shrink: 0; }
+  .banner-fotos-texto { flex: 1; min-width: 0; }
+  .banner-fotos-texto strong { display: block; color: #fff; font-size: 14px; font-family: 'Oswald', sans-serif; letter-spacing: 0.3px; line-height: 1.25; }
+  .banner-fotos-texto small { display: block; color: rgba(255,255,255,0.75); font-size: 11px; margin-top: 2px; }
+  .banner-fotos-cta { background: #fff; color: var(--rojo); border-radius: 7px; padding: 8px 14px; font-size: 12px; font-weight: 700; font-family: 'Oswald', sans-serif; flex-shrink: 0; }
+
   .form-card { background: #fff; margin: 0 14px; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
   .letra-chica { font-size: 11px; color: #999; line-height: 1.5; margin-top: 10px; }
 
@@ -331,6 +338,15 @@
       </p>
     </div>
 
+    <a id="bannerFotos" class="banner-fotos" href="#" target="_blank" rel="noopener">
+      <span class="banner-fotos-icono">🖼️</span>
+      <span class="banner-fotos-texto">
+        <strong>Adquirí tus fotos del encuentro acá</strong>
+        <small>Fotos profesionales de todos los partidos</small>
+      </span>
+      <span class="banner-fotos-cta">Ver</span>
+    </a>
+
     <div class="sec-title"><div class="sec-title-bar"></div><span class="sec-title-text">Subí tu foto</span></div>
     <div class="form-card">
       <div class="form-group">
@@ -481,7 +497,7 @@
 </div>
 
 <button class="admin-secret-btn" onclick="abrirModalAdmin()" title="🔐">⚙️</button>
-<div class="version-badge">v21</div>
+<div class="version-badge">v23</div>
 
 <div id="adminModal" class="modal">
   <div class="modal-content">
@@ -510,6 +526,9 @@
 
   // Pegar aca la direccion de la web del encuentro, entre las comillas
   const WEB_ENCUENTRO = '';
+
+  // Pegar aca la direccion de la app para comprar las fotos del encuentro
+  const APP_FOTOS = 'https://scbasquet.github.io/fotografias/';
 
   // 6 de noviembre de 2026, 18:00 hora argentina
   const ARRANQUE = new Date('2026-11-06T18:00:00-03:00').getTime();
@@ -1123,6 +1142,10 @@
     });
 
     // web del encuentro
+    const banner = document.getElementById('bannerFotos');
+    if (APP_FOTOS) banner.href = APP_FOTOS;
+    else banner.style.display = 'none';
+
     const link = document.getElementById('linkWeb');
     const nota = document.getElementById('notaWeb');
     if (WEB_ENCUENTRO) {
