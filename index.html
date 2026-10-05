@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXI Encuentro Nacional de Mini Básquet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Pantalla de Bienvenida */
+        .welcome-screen {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-screen h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-screen .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .welcome-screen .logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-secondary.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Pantalla Principal */
+        .main-screen {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-screen h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .main-screen .subtitle {
+            color: #999;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+            transform: translateY(-4px);
+        }
+
+        .menu-item.locked {
+            opacity: 0.9;
+        }
+
+        .menu-item .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item .label {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .menu-item .lock-icon {
+            font-size: 12px;
+            color: #d84315;
+            margin-top: 5px;
+        }
+
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        /* Modal Login */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .error-message {
+            color: #d84315;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+        }
+
+        /* Pantalla Colaboradores */
+        .colaboradores-screen {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .colaboradores-screen h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .colaboradores-screen .subtitle {
+            color: #999;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .collaborator-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .collaborator-item {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .collaborator-item:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .collaborator-item .icon {
+            font-size: 24px;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .collaborator-item .label {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Pantalla de Contenido */
+        .content-screen {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-screen h1 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .content-screen .subtitle {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            background: #f5f5ff;
+            border-color: #5568d3;
+        }
+
+        .upload-area.dragover {
+            background: #f5f5ff;
+            border-color: #5568d3;
+        }
+
+        .upload-area .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .upload-area .text {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .upload-area .subtext {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-list {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-item:hover {
+            border-color: #667eea;
+            background: #f9f9ff;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .file-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .file-item-content {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .file-item-icon {
+            font-size: 32px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .file-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-item .name {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            word-break: break-word;
+            margin-bottom: 4px;
+        }
+
+        .file-item .meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .file-item-actions {
+            display: flex;
+            gap: 8px;
+            min-width: fit-content;
+        }
+
+        .file-item .download-btn {
+            background: #e3f2fd;
+            color: #667eea;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .file-item .download-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .file-item .delete-btn {
+            background: #ffebee;
+            color: #d84315;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .file-item .delete-btn:hover {
+            background: #ef5350;
+            color: white;
+        }
+
+        .file-preview-container {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .file-preview-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .empty-message {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-screen h1 {
+                font-size: 24px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Pantalla de Bienvenida -->
+        <div id="welcomeScreen" class="screen active welcome-screen">
+            <div class="logo">🏀</div>
+            <h1>XXI Encuentro Nacional</h1>
+            <p class="subtitle">de Mini Básquet</p>
+            <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Club Independiente de Tandil</p>
+            
+            <button class="btn" onclick="goToMain()">Entrar</button>
+            <button class="btn btn-secondary" onclick="toggleDownloadInfo()">📲 Descargar App</button>
+            
+            <div id="downloadInfo" style="display: none; margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px; text-align: left;">
+                <p style="font-size: 13px; color: #666; line-height: 1.6;">
+                    <strong>Guardar como app en tu dispositivo:</strong><br>
+                    📱 <strong>iOS:</strong> Toca Compartir → Agregar a Pantalla de Inicio<br>
+                    🤖 <strong>Android:</strong> Toca el menú ⋮ → Instalar app
+                </p>
+            </div>
+        </div>
+
+        <!-- Pantalla Principal -->
+        <div id="mainScreen" class="screen main-screen">
+            <h1>XXI Encuentro Nacional</h1>
+            <p class="subtitle">Mini Básquet</p>
+
+            <div class="menu-grid">
+                <div class="menu-item" onclick="openContent('show')">
+                    <div class="icon">🎬</div>
+                    <div class="label">Show</div>
+                </div>
+                <div class="menu-item" onclick="openContent('stands')">
+                    <div class="icon">🏪</div>
+                    <div class="label">Stands</div>
+                </div>
+                <div class="menu-item" onclick="openContent('fixture')">
+                    <div class="icon">📋</div>
+                    <div class="label">Fixture</div>
+                </div>
+                <div class="menu-item" onclick="openContent('plano')">
+                    <div class="icon">🗺️</div>
+                    <div class="label">Plano & Canchas</div>
+                </div>
+                <div class="menu-item" onclick="openContent('sponsors')">
+                    <div class="icon">🤝</div>
+                    <div class="label">Sponsors</div>
+                </div>
+                <div class="menu-item locked" onclick="openColaboradoresLogin()">
+                    <div class="icon">🔐</div>
+                    <div class="label">Colaboradores (SC)</div>
+                    <div class="lock-icon">Requiere clave</div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="toggleDownloadInfo2()">📲 Descargar App</button>
+            <div id="downloadInfo2" style="display: none; margin-top: 15px; padding: 15px; background: #f5f5f5; border-radius: 8px; text-align: left;">
+                <p style="font-size: 13px; color: #666; line-height: 1.6;">
+                    <strong>Guardar como app en tu dispositivo:</strong><br>
+                    📱 <strong>iOS:</strong> Toca Compartir → Agregar a Pantalla de Inicio<br>
+                    🤖 <strong>Android:</strong> Toca el menú ⋮ → Instalar app
+                </p>
+            </div>
+        </div>
+
+        <!-- Pantalla Colaboradores -->
+        <div id="colaboradoresScreen" class="screen colaboradores-screen">
+            <h1>Colaboradores (SC)</h1>
+            <p class="subtitle">Acceso restringido</p>
+
+            <div class="collaborator-menu">
+                <div class="collaborator-item" onclick="openCajaLogin()">
+                    <span class="icon">💰</span>
+                    <span class="label">Caja de Encuentro</span>
+                </div>
+            </div>
+
+            <button class="btn btn-back" onclick="goToMain()">← Volver</button>
+        </div>
+
+        <!-- Pantalla de Contenido Genérico -->
+        <div id="contentScreen" class="screen content-screen">
+            <h1 id="contentTitle">Contenido</h1>
+            <p class="subtitle" id="contentSubtitle"></p>
+
+            <div class="upload-area" id="uploadArea" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                <div class="icon">📤</div>
+                <div class="text">Haz clic o arrastra archivos</div>
+                <div class="subtext">Imágenes, PDFs, videos, etc.</div>
+            </div>
+            <input type="file" id="fileInput" multiple onchange="handleFileSelect(event)">
+
+            <div class="file-list" id="fileList"></div>
+
+            <button class="btn btn-back" onclick="goToMain()">← Volver</button>
+        </div>
+    </div>
+
+    <!-- Modal Login Colaboradores -->
+    <div id="colaboradoresLoginModal" class="modal">
+        <div class="modal-content">
+            <h2>Colaboradores (SC)</h2>
+            <form onsubmit="verifyColaboradoresPassword(event)">
+                <div class="form-group">
+                    <label for="colaboradoresPass">Contraseña</label>
+                    <input type="password" id="colaboradoresPass" autofocus required>
+                </div>
+                <div id="colaboradoresError" class="error-message"></div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn">Entrar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeColaboradoresLogin()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Login Caja -->
+    <div id="cajaLoginModal" class="modal">
+        <div class="modal-content">
+            <h2>Caja de Encuentro</h2>
+            <form onsubmit="verifyCajaPassword(event)">
+                <div class="form-group">
+                    <label for="cajaPass">Contraseña</label>
+                    <input type="password" id="cajaPass" autofocus required>
+                </div>
+                <div id="cajaError" class="error-message"></div>
+                <div class="modal-buttons">
+                    <button type="submit" class="btn">Entrar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCajaLogin()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de contraseñas
+        const PASSWORDS = {
+            colaboradores: 'sc2024', // Cambiar
+            caja: 'caja2024' // Cambiar
+        };
+
+        // Estado de sesión
+        let sessionState = {
+            colaboradoresAuth: false,
+            cajaAuth: false
+        };
+
+        // Navegación
+        function goToMain() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('mainScreen').classList.add('active');
+        }
+
+        function toggleDownloadInfo() {
+            const info = document.getElementById('downloadInfo');
+            info.style.display = info.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function toggleDownloadInfo2() {
+            const info = document.getElementById('downloadInfo2');
+            info.style.display = info.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Colaboradores Login
+        function openColaboradoresLogin() {
+            document.getElementById('colaboradoresError').textContent = '';
+            document.getElementById('colaboradoresPass').value = '';
+            document.getElementById('colaboradoresLoginModal').classList.add('active');
+        }
+
+        function closeColaboradoresLogin() {
+            document.getElementById('colaboradoresLoginModal').classList.remove('active');
+        }
+
+        function verifyColaboradoresPassword(e) {
+            e.preventDefault();
+            const pass = document.getElementById('colaboradoresPass').value;
+            
+            if (pass === PASSWORDS.colaboradores) {
+                sessionState.colaboradoresAuth = true;
+                closeColaboradoresLogin();
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('colaboradoresScreen').classList.add('active');
+            } else {
+                document.getElementById('colaboradoresError').textContent = 'Contraseña incorrecta';
+            }
+        }
+
+        // Caja Login
+        function openCajaLogin() {
+            document.getElementById('cajaError').textContent = '';
+            document.getElementById('cajaPass').value = '';
+            document.getElementById('cajaLoginModal').classList.add('active');
+        }
+
+        function closeCajaLogin() {
+            document.getElementById('cajaLoginModal').classList.remove('active');
+        }
+
+        function verifyCajaPassword(e) {
+            e.preventDefault();
+            const pass = document.getElementById('cajaPass').value;
+            
+            if (pass === PASSWORDS.caja) {
+                sessionState.cajaAuth = true;
+                closeCajaLogin();
+                // Aquí irías a la app de Caja
+                alert('✅ Acceso a Caja de Encuentro (por ahora solo placeholder)\nAcá iría tu app de caja existente.');
+            } else {
+                document.getElementById('cajaError').textContent = 'Contraseña incorrecta';
+            }
+        }
+
+        // Contenido
+        const contentConfig = {
+            show: { title: '🎬 Show', subtitle: 'Videos y contenido del show' },
+            stands: { title: '🏪 Stands', subtitle: 'Información de stands y expositores' },
+            fixture: { title: '📋 Fixture', subtitle: 'Horarios y resultados' },
+            plano: { title: '🗺️ Plano & Canchas', subtitle: 'Mapa del encuentro y ubicación de canchas' },
+            sponsors: { title: '🤝 Sponsors', subtitle: 'Empresas patrocinadoras' }
+        };
+
+        function openContent(type) {
+            const config = contentConfig[type];
+            document.getElementById('contentTitle').textContent = config.title;
+            document.getElementById('contentSubtitle').textContent = config.subtitle;
+            
+            currentContentType = type;
+            loadFiles(type);
+            
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('contentScreen').classList.add('active');
+        }
+
+        // Manejo de archivos
+        let currentContentType = '';
+
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            files.forEach(file => addFile(currentContentType, file));
+            document.getElementById('fileInput').value = '';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.remove('dragover');
+            
+            const files = Array.from(e.dataTransfer.files);
+            files.forEach(file => addFile(currentContentType, file));
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('dragover');
+        }
+
+        document.getElementById('uploadArea').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+
+        function addFile(type, file) {
+            let files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                files.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    data: e.target.result,
+                    uploadedAt: new Date().toLocaleString()
+                });
+                localStorage.setItem(`encuentro_${type}`, JSON.stringify(files));
+                loadFiles(type);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function getFileIcon(mimeType, fileName) {
+            if (mimeType.startsWith('image/')) return '🖼️';
+            if (mimeType.startsWith('video/')) return '🎥';
+            if (mimeType === 'application/pdf') return '📄';
+            if (fileName.includes('.xlsx') || fileName.includes('.xls')) return '📊';
+            if (fileName.includes('.doc')) return '📝';
+            if (mimeType.startsWith('audio/')) return '🔊';
+            return '📎';
+        }
+
+        function loadFiles(type) {
+            const files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
+            const fileList = document.getElementById('fileList');
+            
+            if (files.length === 0) {
+                fileList.innerHTML = '<div class="empty-message">No hay archivos cargados aún</div>';
+                return;
+            }
+
+            fileList.innerHTML = files.map((file, idx) => {
+                const isImage = file.type.startsWith('image/');
+                const fileSize = (file.size / 1024).toFixed(1); // KB
+                const icon = getFileIcon(file.type, file.name);
+                
+                return `
+                    <div class="file-item">
+                        <div class="file-item-content">
+                            <div class="file-item-icon">${icon}</div>
+                            <div class="file-item-info">
+                                <div class="name">${file.name}</div>
+                                <div class="meta">
+                                    ${fileSize} KB • ${file.uploadedAt}
+                                </div>
+                                ${isImage ? `<div class="file-preview-container">
+                                    <img src="${file.data}" class="file-preview-img" alt="Preview">
+                                </div>` : ''}
+                            </div>
+                            <div class="file-item-actions">
+                                <button class="download-btn" onclick="downloadFile('${type}', ${idx})">↓ Descargar</button>
+                                <button class="delete-btn" onclick="deleteFile('${type}', ${idx})">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function downloadFile(type, idx) {
+            const files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
+            const file = files[idx];
+            
+            if (!file) return;
+            
+            const link = document.createElement('a');
+            link.href = file.data;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function deleteFile(type, idx) {
+            if (confirm('¿Eliminar este archivo?')) {
+                let files = JSON.parse(localStorage.getItem(`encuentro_${type}`) || '[]');
+                files.splice(idx, 1);
+                localStorage.setItem(`encuentro_${type}`, JSON.stringify(files));
+                loadFiles(type);
+            }
+        }
+    </script>
+</body>
+</html>
