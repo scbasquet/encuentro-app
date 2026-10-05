@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XXI Encuentro Nacional de Mini Básquet</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        pdfjsWorker = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </style>
     <style>
         * {
             margin: 0;
@@ -453,6 +457,118 @@
             50% { opacity: 0.5; }
         }
 
+        /* PDF Viewer */
+        .pdf-container {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pdf-header .title {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .pdf-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .pdf-controls button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-controls button:hover {
+            background: #5568d3;
+        }
+
+        .pdf-viewer {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .pdf-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 400px;
+            background: #f9f9f9;
+        }
+
+        .pdf-page canvas {
+            max-width: 100%;
+            max-height: 600px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .pdf-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .pdf-nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-nav button:hover {
+            background: #5568d3;
+        }
+
+        .pdf-nav button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pdf-page-info {
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .file-item.pdf-file {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea;
+        }
+
         @media (max-width: 480px) {
             .menu-grid {
                 grid-template-columns: 1fr;
@@ -779,19 +895,62 @@
             .then(r => r.json())
             .then(data => {
                 if (data.success && data.files.length > 0) {
-                    fileList.innerHTML = data.files.map((file, idx) => `
-                        <div class="file-item">
-                            <div class="file-item-icon">${getFileIcon(file.fileName)}</div>
-                            <div class="file-item-info">
-                                <div class="name">${file.fileName}</div>
-                                <div class="meta">${file.fileSize} KB • ${file.uploadedAt}</div>
+                    let html = '';
+                    const pdfFiles = data.files.filter(f => f.fileName.match(/\.pdf$/i));
+                    const otherFiles = data.files.filter(f => !f.fileName.match(/\.pdf$/i));
+                    
+                    // Mostrar PDFs primero con visor
+                    pdfFiles.forEach((file, idx) => {
+                        html += `
+                            <div class="pdf-container">
+                                <div class="pdf-header">
+                                    <div class="title">📄 ${file.fileName}</div>
+                                    <div class="pdf-controls">
+                                        <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Descargar</a>
+                                    </div>
+                                </div>
+                                <div class="pdf-viewer">
+                                    <div class="pdf-page" id="pdf-page-${idx}">
+                                        <div style="color: #999; text-align: center;">
+                                            <div class="loading-spinner" style="display: inline-block;"></div>
+                                            Renderizando PDF...
+                                        </div>
+                                    </div>
+                                    <div class="pdf-nav" id="pdf-nav-${idx}" style="display: none;">
+                                        <button onclick="previousPdfPage(${idx})" id="pdf-prev-${idx}">← Anterior</button>
+                                        <span class="pdf-page-info">
+                                            Página <span id="pdf-current-${idx}">1</span> de <span id="pdf-total-${idx}">0</span>
+                                        </span>
+                                        <button onclick="nextPdfPage(${idx})" id="pdf-next-${idx}">Siguiente →</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="file-item-actions">
-                                <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Ver</a>
-                                <button class="delete-btn" onclick="deleteFile('${type}', '${file.fileName}')">✕</button>
+                        `;
+                    });
+                    
+                    // Mostrar otros archivos
+                    if (otherFiles.length > 0) {
+                        html += otherFiles.map((file, idx) => `
+                            <div class="file-item">
+                                <div class="file-item-icon">${getFileIcon(file.fileName)}</div>
+                                <div class="file-item-info">
+                                    <div class="name">${file.fileName}</div>
+                                    <div class="meta">${file.fileSize} KB • ${file.uploadedAt}</div>
+                                </div>
+                                <div class="file-item-actions">
+                                    <a href="${file.fileLink}" target="_blank" class="file-item download-btn">↓ Ver</a>
+                                    <button class="delete-btn" onclick="deleteFile('${type}', '${file.fileName}')">✕</button>
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
+                    }
+                    
+                    fileList.innerHTML = html;
+                    
+                    // Renderizar PDFs
+                    pdfFiles.forEach((file, idx) => {
+                        renderPdfPreview(file.fileLink, idx);
+                    });
                 } else {
                     fileList.innerHTML = '<div class="empty-message">No hay archivos cargados aún</div>';
                 }
@@ -799,6 +958,74 @@
             .catch(err => {
                 fileList.innerHTML = '<div class="empty-message">Error al cargar archivos</div>';
             });
+        }
+
+        // Variables globales para PDFs
+        const pdfState = {};
+
+        function renderPdfPreview(fileLink, pageIdx) {
+            // Convertir link de Drive a link directo
+            const pdfUrl = fileLink.replace('/view', '/export?format=pdf');
+            
+            pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+                pdfState[pageIdx] = { pdf, currentPage: 1 };
+                renderPdfPage(pageIdx, 1);
+                
+                // Mostrar controles de navegación si hay más de una página
+                if (pdf.numPages > 1) {
+                    document.getElementById(`pdf-nav-${pageIdx}`).style.display = 'flex';
+                    document.getElementById(`pdf-total-${pageIdx}`).textContent = pdf.numPages;
+                }
+            }).catch(err => {
+                console.error('Error loading PDF:', err);
+                const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
+                if (pageDiv) {
+                    pageDiv.innerHTML = '<div style="color: #d84315; padding: 20px; text-align: center;">Error al cargar PDF. <a href="' + fileLink + '" target="_blank" style="color: #667eea;">Ver en Drive</a></div>';
+                }
+            });
+        }
+
+        function renderPdfPage(pageIdx, pageNum) {
+            const state = pdfState[pageIdx];
+            if (!state) return;
+            
+            state.pdf.getPage(pageNum).then(page => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const viewport = page.getViewport({ scale: 1.5 });
+                
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                page.render({ canvasContext: context, viewport }).promise.then(() => {
+                    const pageDiv = document.getElementById(`pdf-page-${pageIdx}`);
+                    if (pageDiv) {
+                        pageDiv.innerHTML = '';
+                        pageDiv.appendChild(canvas);
+                    }
+                    
+                    state.currentPage = pageNum;
+                    document.getElementById(`pdf-current-${pageIdx}`).textContent = pageNum;
+                    
+                    // Actualizar botones
+                    document.getElementById(`pdf-prev-${pageIdx}`).disabled = pageNum === 1;
+                    document.getElementById(`pdf-next-${pageIdx}`).disabled = pageNum === state.pdf.numPages;
+                });
+            });
+        }
+
+        function nextPdfPage(pageIdx) {
+            const state = pdfState[pageIdx];
+            if (state && state.currentPage < state.pdf.numPages) {
+                renderPdfPage(pageIdx, state.currentPage + 1);
+            }
+        }
+
+        function previousPdfPage(pageIdx) {
+            const state = pdfState[pageIdx];
+            if (state && state.currentPage > 1) {
+                renderPdfPage(pageIdx, state.currentPage - 1);
+            }
         }
 
         function deleteFile(type, fileName) {
