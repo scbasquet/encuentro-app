@@ -731,15 +731,16 @@
     <button class="admin-secret-btn" onclick="openAdminModal()" title="🔐">⚙️</button>
 
     <!-- Version Badge -->
-    <div class="version-badge">v7</div>
+    <div class="version-badge">v8</div>
 
     <script>
         const ADMIN_PASSWORD = 'admin123'; // Cambiar esto
         const SCRIPT_URL_KEY = 'encuentro_scriptUrl';
+        const SCRIPT_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbyVuOc5ZnTdHhiGJ799GtnKj8ilFUxM3vnJeqTXW6BMExNiNJpJ6mZsd1LALjfA_i8-7Q/exec';
 
         let appState = {
             isAdmin: false,
-            scriptUrl: null,
+            scriptUrl: SCRIPT_URL_DEFAULT,
             currentContentType: ''
         };
 
@@ -771,11 +772,9 @@
             
             if (pass === ADMIN_PASSWORD) {
                 appState.isAdmin = true;
-                const saved = localStorage.getItem(SCRIPT_URL_KEY);
-                if (saved) {
-                    document.getElementById('adminScriptUrl').value = saved;
-                    appState.scriptUrl = saved;
-                }
+                const saved = localStorage.getItem(SCRIPT_URL_KEY) || SCRIPT_URL_DEFAULT;
+                document.getElementById('adminScriptUrl').value = saved;
+                appState.scriptUrl = saved;
                 closeAdminModal();
                 showScreen('adminPanel');
             } else {
@@ -1095,9 +1094,7 @@
         // Inicializar
         window.addEventListener('load', () => {
             const saved = localStorage.getItem(SCRIPT_URL_KEY);
-            if (saved) {
-                appState.scriptUrl = saved;
-            }
+            appState.scriptUrl = saved || SCRIPT_URL_DEFAULT;
         });
     </script>
 </body>
